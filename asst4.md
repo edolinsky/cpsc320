@@ -8,11 +8,93 @@ All group members have read and followed the guidelines for academic conduct in 
 
 ### 1.1 Root-finding
 
-[Answer]
+#### 1
+
+```
+findRoot(n, e):
+  min = 0
+  x = n
+  max = n
+
+  while (abs(x * x - n) > e):
+    x = (min + max) / 2
+    if (x * x > n):
+      max = x
+    else:
+      min = x
+
+  return x
+
+abs(i):
+  if (i < 0):
+    i =  -1 * i
+  return i
+```
+
+#### 2
+
+With each iteration of the loop, exactly one of max or min is updated to the
+value of x, which is the midpoint between the two values. This cuts down our
+problem size by half with each iteration. A recurrence relation for the loop
+would be _T(n) = T(n/2) + constant_, which gives a runtime of O(lg(n)) by the
+second case of the Master Theorem.
 
 ### 1.2 Array-chopping
 
-[Answer]
+#### 1
+
+Using a 0-indexed array:
+```
+findC(A):
+  if |A| < 2:
+    c = -1    # Error case
+  else if |A| == 2:
+    c = (A[1] - A[0]) / 2
+  else:
+    c = min(A[2] - A[1], A[1] - A[0])
+  return c
+```
+
+#### 2
+
+Once again, using a 0-indexed array.
+```
+findMN(A):
+  c = findC(A)
+  return mnHelper(A, 0, |A| - 1, c)
+
+mnHelper(A, start, end, c):
+  if start >= end:
+    return infinity   # Error case
+
+  mid = floor(start + (end - start) / 2)
+
+  if (A[mid + 1] - A[mid]) != c:
+    # Missing element is between A[mid] and A[mid + 1]
+    return A[mid] + c
+
+  else if mid > 0 and (A[mid] - A[mid - 1]) != c:
+    # Missing element is between A[mid - 1] and A[mid]
+    return A[mid] - c
+
+  else if A[mid] == (A[0] + c * mid)
+    # Missing element somewhere in 2nd half
+    return mnHelper(A, mid + 1, end, c)
+
+  else
+    # Missing element somwehere in 1st half
+    return mnHelper(A, start, mid-1, c)
+```
+
+#### 3
+
+As `findC` operates in constant time, the bulk of the work is done in `mnHelper`.
+In `mnHelper`, we have three options: recursively call `mnHelper` on indices
+_start_ to _mid - 1_, recursively call `mnHelper` on indices _mid + 1_ to _end_,
+or do a constant amount of work and return the answer. This effectively cuts
+down the sample size by half with each call until the answer is found. This gives
+us a recurrence relation of _T(n) = T(n/2) + constant_, and thus a runtime of
+O(lg(n)) by the second case of the Master Theorem.
 
 ## 2 Tiles and Tribulations
 
@@ -194,7 +276,8 @@ we have the following recurrence relation:
 
 _T(n) = 2T(n/2) + n_
 
-The Master Theorem states that if for some constant _k >= 0_, and recurrence relation
+The Second Case of the Master Theorem states that if for some constant _k >= 0_,
+and recurrence relation
 
 _T(n) = aT(n/b) + f(n)_ where _a >= 1_ and _b > 1_
 
@@ -215,7 +298,7 @@ determined in _1b)_, we have the following recurrence relation:
 
 _T(n) = 2T(n/2) + n<sup>2</sup>_
 
-The Master Theorem states that if for some recurrence relation
+The Third Case of the Master Theorem states that if for some recurrence relation
 
 _T(n) = aT(n/b) + f(n)_ where _a >= 1_ and _b > 1_
 
