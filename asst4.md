@@ -1,6 +1,6 @@
 # Assignment 4
 
-Gradescope Ids: 605 & (Erik's ID)
+Gradescope Ids: 605 & 557
 
 All group members have read and followed the guidelines for academic conduct in CPSC 320. As part of those rules, when collaborating with anyone outside my group, (1) I and my collaborators took no record but names (and Gradescope information) away, and (2) after a suitable break, my group created the assignment I am submitting without help from anyone other than the course staff.
 
