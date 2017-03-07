@@ -1,6 +1,8 @@
 # Assignment 4
 
-Reid Oliveira & Erik Dolinsky
+Gradescope Ids: 605 & (Erik's ID)
+
+All group members have read and followed the guidelines for academic conduct in CPSC 320. As part of those rules, when collaborating with anyone outside my group, (1) I and my collaborators took no record but names (and Gradescope information) away, and (2) after a suitable break, my group created the assignment I am submitting without help from anyone other than the course staff.
 
 ## 1 I'm a Lumberjack (And I'm Okay)
 
@@ -16,15 +18,138 @@ Reid Oliveira & Erik Dolinsky
 
 ### 2.0 Warming up
 
-[Answer]
+<table>
+    <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>3</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>-</td>
+        <td>4</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>4</td>
+        <td>4</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>2</td>
+        <td>5</td>
+        <td>5</td>
+    </tr>
+</table>
 
 ### 2.1 Whether-proof tiles
 
-[Answer]
+Start, as prompted, by assuming we can cover any arbitrary 2<sup>2</sup>x2<sup>2</sup> board with one cell missing. We are then able to cover any 2<sup>3</sup>x2<sup>3</sup> board by placing a tile at the centre of the board to fill the 2x2 square made by a corner from each of the four 2<sup>2</sup>x2<sup>2</sup> boards that make up the 2<sup>3</sup>x2<sup>3</sup> board, pictured below as x's.
+
+<table>
+    <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+    <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+    <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+    <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td><b>x</b></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+    <tr>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td><b>x</b></td>
+        <td><b>x</b></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+    <tr>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+    <tr>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+    <tr>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+        <td></br></td>
+    </tr>
+</table>
+
+Placing the tile here leaves the remaining three corners each as 2<sup>2</sup>x2<sup>2</sup> boards with one piece remaining, which we already know we can solve for.
+
+This argument continues to any 2<sup>k</sup>x2<sup>k</sup> problem, as we can break it into four 2<sup>k-1</sup>x2<sup>k-1</sup> problems, each of which can be broken into four 2<sup>k-2</sup>x2<sup>k-2</sup> and so on until we get to our 2<sup>2</sup>x2<sup>2</sup> case we know we can solve for.
 
 ### 2.2 A million little quadrants
 
-[Answer]
+```
+1. recursively pick quadrant with missing square down to a 2x2
+
+2. fill that 2x2 up
+
+3. at the next level up add an l-piece as described above.
+
+4. fill up the other 2x2s
+
+5. add the l- piece in, recurse the other quadrants as they now also have a missing piece
+
+```
 
 ### 2.3 More whether-proofing
 
