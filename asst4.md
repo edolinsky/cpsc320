@@ -289,7 +289,7 @@ _T(n) &#8712; &Theta; (n<sup>c</sup>(log(n))<sup>k+1</sup>)_
 Here, we have _a = 2_, _b = 2_, _c = log<sub>2</sub>2 = 1_, and _f(n) = n_.
 
 So we must show _n &#8712; &Theta; (n<sup>1</sup>(log(n))<sup>k</sup>)_. Here,
-choose _k = 0_. Then, _n &#8712; &Theta; n_. So, _T(n) &#8712; &Theta; (nlog(n))_,
+choose _k = 0_. Then, _n &#8712; &Theta; (n)_. So, _T(n) &#8712; &Theta; (nlog(n))_,
 which also defines the tight lower bound and thus _T(n) &#8712; &Omega; (nlog(n))_.
 
 #### b)
@@ -319,7 +319,7 @@ we have _2(n/2)<sup>2</sup> <= kn<sup>2</sup>_ for _k < 1_ and sufficiently larg
 Simplified, we have _n<sup>2</sup>/2 <= kn<sup>2</sup>_, and thus with _k = 1/2_,
 the expression holds for all _n_.
 
-As both expressions are satisfied, we have _T(n) &#8712; &Theta; n<sup>2</sup>_,
+As both expressions are satisfied, we have _T(n) &#8712; &Theta; (n<sup>2</sup>)_,
 and thus the tight upper bound _T(n) &#8712; O(n<sup>2</sup>)_.
 
 ### 3
