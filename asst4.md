@@ -235,17 +235,39 @@ This argument continues to any 2<sup>k</sup>x2<sup>k</sup> problem, as we can br
 
 ### 2.3 More whether-proofing
 
-[Answer]
+No. In order for a solution to be possible for a certain square with side length x, x<sup>2</sup>-1 must be divisible by 3.
+
+With 2kx2k, take for example k = 3. Our square is then 6x6 = 36. 36%3 = 0, so (36-1)%3 must be 2. And in fact
+35 / 12 = 11 remainder 2. So it is impossible to solve this problem and so therefore we can't always solve the general
+problem of 2kx2k
 
 ## 3 Greed is Good, But Conquest is Better
 
 ### 3.1 BF Bank?
 
-[Answer]
+1. </br>
+        init best to 0
+
+        for each a in A
+            init count and cur_max to 0
+            if a >= 0:
+                best = max(best, cur_max * count)
+                count = cur_max = 0
+            else:
+                cur_max = max(cur_max, a)
+                count++
+
+2. this runs in linear time, it is a single iteration throught the array looking for the best streak of negative numbers.
 
 ### 3.2 D + C = Profit
 
-[Answer]
+1. Since the maximum element in A is 4, it means that the entire array A are negative numbers and the account is in overdraft for the full time period. Therefore the charge is 4d for any interval d in the array.
+
+2. the algorithm above is linear run time so maybe I could just use that? Can I do better?
+
+3. O(n)
+
+4. O(n)
 
 ## 4 Debug-and-Conquer
 
