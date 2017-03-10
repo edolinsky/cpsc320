@@ -49,7 +49,7 @@ findC(A):
   if |A| < 2:
     c = -1    # Error case
   else if |A| == 2:
-    c = (A[1] - A[0]) / 2
+    c = (A[1] + A[0]) / 2
   else:
     c = min(A[2] - A[1], A[1] - A[0])
   return c
