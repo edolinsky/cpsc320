@@ -220,22 +220,34 @@ This argument continues to any 2<sup>k</sup>x2<sup>k</sup> problem, as we can br
 
 ### 2.2 A million little quadrants
 
+We do a divide and conquer solution as follows:
+
+*Note: we assume that the "add L-piece" part of the code tags the filled spots with some unique identifier in order
+to be able to see the solution when it is finished*
 ```
-1. recursively pick quadrant with missing square down to a 2x2
+FillRec(square, sideLength)
 
-2. fill that 2x2 up
+    // base case
+    if(size = 2)
+        add L-piece to fill the square
 
-3. at the next level up add an l-piece as described above.
+    // recursive case, split into 4 more quadrants and join with an L-piece
+    else
+        create P1 to be the quadrant with the missing piece in it.
+        create P2, P3, and P4 to be the other 3 quadrants
 
-4. fill up the other 2x2s
+        FillRec(P1, sideLength / 2)
 
-5. add the l- piece in, recurse the other quadrants as they now also have a missing piece
+        add L-piece on the corner of P1 with one square in each of the remaining 3 quadrants
 
+        FillRec(P2, sideLength / 2)
+        FillRec(P3, sideLength / 2)
+        FillRec(P4, sideLength / 2)
 ```
 
 ### 2.3 More whether-proofing
 
-No. In order for a solution to be possible for a certain square with side length x, x<sup>2</sup>-1 must be divisible by 3.
+**No.** In order for a solution to be possible for a certain square with side length x, x<sup>2</sup>-1 must be divisible by 3.
 
 With 2kx2k, take for example k = 3. Our square is then 6x6 = 36. 36%3 = 0, so (36-1)%3 must be 2. And in fact
 35 / 12 = 11 remainder 2. So it is impossible to solve this problem and so therefore we can't always solve the general
@@ -246,28 +258,42 @@ problem of 2kx2k
 ### 3.1 BF Bank?
 
 1. </br>
+
         init best to 0
 
-        for each a in A
-            init count and cur_max to 0
-            if a >= 0:
-                best = max(best, cur_max * count)
-                count = cur_max = 0
-            else:
-                cur_max = max(cur_max, a)
-                count++
+        // one based indexing
+        for i = 1 to n
+            for j = i to n
 
-2. this runs in linear time, it is a single iteration throught the array looking for the best streak of negative numbers.
+            charge = -(j-i+1) * max{(A[i], A[i+1], ... A[j])}
+
+            best = max(charge, best)
+
+
+2. This solution checks all possible intervals in A for the best charge. For simplicity we call the second loop's bounds
+as 1 to n as well (this is also more brute force but using i to n in the original solution made the A[i] ... A[j] easier
+to write out), then this is n iterations of n iterations -> O(n<sup>2</sup>)
 
 ### 3.2 D + C = Profit
 
 1. Since the maximum element in A is 4, it means that the entire array A are negative numbers and the account is in overdraft for the full time period. Therefore the charge is 4d for any interval d in the array.
 
-2. the algorithm above is linear run time so maybe I could just use that? Can I do better?
+2. </br>
+        init best to 0
 
-3. O(n)
+        init count and cur_max to 0
+        for each a in A
+            if a >= 0:
+                best = max(best, cur_max * -count)
+                count = cur_max = 0
+            else:
+                cur_max = max(cur_max, a)
+                count++
 
-4. O(n)
+3. This is a single iteration through the array, so worst case is O(n)
+
+4. The average case has the same runtime, since we cannot know if we have the best solution yet without looking through the
+array until the end. So best case = average case = worst case = O(n)
 
 ## 4 Debug-and-Conquer
 
