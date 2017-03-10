@@ -297,25 +297,21 @@ array until the end. So best case = average case = worst case = O(n)
 
 ## 4 Debug-and-Conquer
 
-### 1
-
-#### a)
+### 1a)
 The best case for this algorithm is a graph which is minimally connected, for
 example a tree or chain. In this case, there are only _m = n - 1_ edges, and so
 the work done within each call to subgraphs, O(m+n) is O(n). As the rest of the
 non-recursive work done in each call to `DC_MST` is at most linear, the work done
 within each node is O(n).
 
-#### b)
+### 1b)
 The worst case for this algorithm is a graph which is fully connected. In this
 case, there are _m = n(n-1)/2_ edges, which means that the work done within each
 call to subgraphs, O(m+n) is O(n<sup>2</sup>). Asthe rest of the non-recursive
 work done in each call to `DC_MST` is at most linear, the work done within each
 node is O(n<sup>2</sup>).
 
-### 2
-
-#### a)
+### 2a)
 As the size of each vertex set produced by `subgraphs()` differ by at most one,
 and two graphs are produced, we can say that the two subgraphs produced are
 each approximately half the size of the original problem. As both are recursed
@@ -340,7 +336,7 @@ So we must show _n &#8712; &Theta; (n<sup>1</sup>(log(n))<sup>k</sup>)_. Here,
 choose _k = 0_. Then, _n &#8712; &Theta; (n)_. So, _T(n) &#8712; &Theta; (nlog(n))_,
 which also defines the tight lower bound and thus _T(n) &#8712; &Omega; (nlog(n))_.
 
-#### b)
+### 2b)
 By the same reasoning as in _2a)_, but with the worst-case work per node as
 determined in _1b)_, we have the following recurrence relation:
 
