@@ -61,6 +61,13 @@ As _&Theta;(n<sup>2</sup>)_ entries are computed in constant time each, and the
 set-up work would take no greater than _&Theta;(n<sup>2</sup>)_ time, the
 slightly less naive algorithm would run in _&Theta;(n<sup>2</sup>)_ time.
 
+#### 1.1.3
+```
+for i = 1 to n:
+	for j = 1 to n - i + 1:
+		compute A[i,j]
+```
+
 ### 1.2 Take a Memo!
 
 As a specified solution index is not requested, we return the whole solution
