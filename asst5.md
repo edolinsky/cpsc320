@@ -27,7 +27,7 @@ naiveHelper(i, j):
 Assuming that storing one value of A takes constant space and that the matrix
 is not copied on each recursive call, a slightly less naive memoized version of
 this algorithm would take _&Theta;(n<sup>2</sup>)_ space as we would store
-_n + (n - 1) + ... + 2 + 1 = n(n + 1)/2_ computed entries. In other words, the
+_1 + 2 + ... + (n - 1) + n = n(n + 1)/2_ computed entries. In other words, the
 algorithm fills in all entries above (and including) the anti-diagonal of an _n x n_
 matrix, as shown below for n=4:
 
@@ -58,7 +58,7 @@ matrix, as shown below for n=4:
 </table>
 
 As _&Theta;(n<sup>2</sup>)_ entries are computed in constant time each, and the
-set-up work would take no greater than _&Theta;(n<sup>2</sup>)_ time, the
+set-up work would take no greater than _O(n<sup>2</sup>)_ time, the
 slightly less naive algorithm would run in _&Theta;(n<sup>2</sup>)_ time.
 
 #### 1.1.3
