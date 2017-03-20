@@ -85,10 +85,12 @@ memoizedHelper(A, C, i):
 			A[i] = 1
 		else:
 			min = infinity
+
 			for j = ceil(i / 2) to i - 1:
-				contender = memoizedHelper(A, C, j) + C[i] - C[j]
+				candidate = memoizedHelper(A, C, j) + C[i] - C[j]
 				if contender < min:
-					min = contender
+					min = candidate
+
 			A[i] = min
 	return A[i]
 ```
@@ -100,16 +102,22 @@ dynamo(C):
 	n = length(C)
 	mid = floor(n/2)
 	A = array of length n
+
 	if n <= 9:
 		return 1
+
 	for i = 1 up to 4:
 		A[i] = 1
+
 	for i = n down to n - 4:
 		A[i] = 1
+
 	for i = 5 up to mid - 1:
 		A[i] = min(C[i-1] + A[i-1], C[i-2] + A[i-2])
+
 	for i = n down to mid + 1:
 		A[i] = min(C[i+1] + A[i+1], C[i+2] + A[i+2])
+
 	A[mid] = min(C[i-1] + A[i-1], C[i+1] + A[i+1])
 	return A[mid]
 ```
@@ -118,11 +126,70 @@ dynamo(C):
 
 ### 2.1 Permission Accomplished
 
-[Answer]
+#### 2.1.1
+
+_C(n) = C(n - d<sub>t</sub>) + p<sub>t</sub>_
+
+#### 2.1.2
+
+for _n <= 0_, _C(n) = 0_
+
+#### 2.1.3
+
+Assuming that for all d<sub>t</sub> in D, d<sub>t</sub> >= 1, and that every
+p<sub>t</sub> in P is positive. Using 1-based indexing and a memoized solution.
+
+```
+D = global array of durations, size k
+P = global array of prices, size k
+A = global array of yet unknown length, uninitialized
+
+findIdealPermits(n):
+	A = empty array of size n
+	initialize all entries in A to null
+	return permitHelper(A, n)
+
+permitHelper(i):
+	if i <= 0:
+		return 0
+
+	else if A[i] is null:
+		min = infinity
+
+		for t in 1 to k:
+			candidate = permitHelper(i - D[t]) + P[t]
+			if candidate < min:
+				min = candidate
+
+		A[i] = min
+	return A[i]
+```
 
 ### 2.2 Where Did We Park?
 
-[Answer]
+```
+explainPermit(A):
+	i = length(A)
+	permits = list of maximum size i
+
+	while A[i] != 0:
+		min = infinity
+		permitChosen = -1
+
+		for t in 1 to k:
+			candidate = A[i] - P[t]
+			if candidate < min:
+				min = candidate
+				permitChosen = t
+
+		if permitChosen = -1:
+			throw Error			// should not occur
+
+		i -= D[permitChosen]
+		add permitChosen to the beginning of permits
+
+	return permits		
+```
 
 ## 3. Pwner of All I Survey
 
