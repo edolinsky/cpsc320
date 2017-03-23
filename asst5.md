@@ -147,7 +147,7 @@ A = global array of yet unknown length, uninitialized
 findIdealPermits(n):
 	A = empty array of size n
 	initialize all entries in A to null
-	return permitHelper(A, n)
+	return permitHelper(n)
 
 permitHelper(i):
 	if i <= 0:
