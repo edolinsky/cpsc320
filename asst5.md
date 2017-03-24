@@ -233,9 +233,12 @@ of a question, m
 ## 4 Seam Carving
 
 ### 4.1 Seamingly Simple
+1. ![](./4-1.jpg)
+    - 4+7+4 = 15
+    - 5+1+1 = 7
 
-[Answer]
+2. C(1,j) = A[1][j]
 
 ### 4.2 Seamy Details
 
-[Answer]
+C(i,j) = min(C(i,j-1), C(i,j), C(i,j+1)) + A[i][j]
