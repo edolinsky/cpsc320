@@ -167,7 +167,7 @@ permitHelper(i):
 	return A[i]
 ```
 
-Now, a dynamic programming version in Python:
+Now, a dynamic programming version written in Python (0-indexing):
 ```Python
 D = [1, 2, 3]
 P = [2, 3, 4]
@@ -202,6 +202,8 @@ def find_ideal_cost(n):
 
 ### 2.2 Where Did We Park?
 
+We return a list of the indices of the permits used (1-indexed in this case).
+
 ```
 explain_permit(a):
     k = len(D)
@@ -218,25 +220,25 @@ explain_permit(a):
             if n - D[permit_idx] <= 0:
                 candidate = P[permit_idx]
 
+				if candidate < minimum:
+					minimum = candidate
+					permit_idx_chosen = permit_idx
+
             else if a[end - D[permit_idx]] == a[n] - P[permit_idx]:
                 candidate = a[n - D[permit_idx]]
 
-			else:
-				Do not bother with this permit,
-				skip over the rest of this iteration.
-
-            if candidate < minimum:
-                minimum = candidate
-                permit_idx_chosen = permit_idx
+            	if candidate < minimum:
+                	minimum = candidate
+                	permit_idx_chosen = permit_idx
 
         if permit_idx_chosen == -1:
 			throw an Error		// should not occur
 
 		# Add our permit to the front of the list (so that it is displayed in order)
-        return list(D[permit_idx_chosen]) + explain_permit(a[n - (D[permit_idx_chosen])])
+        return list(permit_idx_chosen) + explain_permit(a[n - (D[permit_idx_chosen])])
 ```
 
-Now, in Python:
+Now, in Python, with 0-indexing:
 
 ```Python
 def explain_permit(a):
@@ -270,7 +272,7 @@ def explain_permit(a):
         # Make sure we've chosen a pass.
         assert(permit_idx_chosen != -1)
 
-        return [D[permit_idx_chosen]] +
+        return [permit_idx_chosen] +
 				explain_permit(a[:-(D[permit_idx_chosen])])
 ```
 
