@@ -195,11 +195,40 @@ explainPermit(A):
 
 ### 3.1 A Profound Dis-Likert for Greedy
 
-[Answer]
+Let us have question lengths 4,5,3,5,2,6 with m = 6
+
+- **Greedy Solution:** {{4,5,3}, {5,2}, {6}}, score = (12-12)<sup>2</sup> + (12-7)<sup>2</sup>
+= 0<sup>2</sup> + 5<sup>2</sup> = 25
+- **Optimal Solution:** {{4,5}, {3,5,2}, {6}}, score = (12 - 9)<sup>2</sup> + (12-10)<sup>2</sup>
+= 3<sup>2</sup> + 2<sup>2</sup> = 9 + 4 = 13
+
+
 
 ### 3.2 A Fair and Balanced Survey
 
-[Answer]
+*here we want to try every page length we can, recursing the rest of the questions*
+e.g.: 1,2,3,4,5 with m = 5
+try {{1}, recurse}, {{1,2}, recurse}, {{1,2,3}, recurse}, {{1,2,3,4}, recurse}
+
+our function LowestScore computes the lowest score possible given a list of questions (lengths), Q, and the max length
+of a question, m
+        LowestScore(Q, m)
+            // Form a page in all the different lengths possible with elements off of Q, recurse, get min
+
+            init total, index and to 0
+            init score to infinity
+            while(total < 2m)
+                if(Q[index] != null)
+                    total += Q[index]
+                    score = min(score, LowestScore(Q[index+1:end], m))
+                    index++
+                else
+                    // if Q[index] == null then we ran out of pages,
+                    // we just formed the last page, which scores 0
+                    return 0
+            // end while
+
+            return score
 
 ## 4 Seam Carving
 
