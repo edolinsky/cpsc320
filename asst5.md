@@ -138,13 +138,15 @@ for _n <= 0_, _C(n) = 0_
 
 Assuming that for all d<sub>t</sub> in D, d<sub>t</sub> >= 1, and that every
 p<sub>t</sub> in P is positive. Using 1-based indexing and a memoized solution.
+If there were 0-day permits, we could remove them before processing, and use the
+resulting solution.
 
 ```
 D = global array of durations, size k
 P = global array of prices, size k
 A = global array of yet unknown length, uninitialized
 
-findIdealPermits(n):
+findIdealCost(n):
 	A = empty array of size n
 	initialize all entries in A to null
 	return permitHelper(n)
@@ -165,30 +167,111 @@ permitHelper(i):
 	return A[i]
 ```
 
+Now, a dynamic programming version in Python:
+```Python
+D = [1, 2, 3]
+P = [2, 3, 4]
+A = []
+
+def find_ideal_cost(n):
+    assert(len(D) == len(P))
+    k = len(D)
+
+    # Iterate over days, increasing. Day 1 corresponds to index 0.
+    for d in range(n):
+        minimum = float("inf")  # infinity.
+
+        # Iterate over permit types, calculating the minimum cost to get us
+        # to this day.
+        for permit_idx in range(k):
+            if d - D[permit_idx] < 0:
+                # Base case: only one of this permit to get us to today.
+                candidate = P[permit_idx]
+            else:
+                # If this permit type didn't cover us from the first day,
+                # calculate the cumulative cost.
+                candidate = A[d - D[permit_idx]] + P[permit_idx]
+
+            # Take the minimum cost of all the permit types for today.
+            if candidate < minimum:
+                minimum = candidate
+        # Add to end of the list.
+        A.append(minimum)
+    return A[-1]
+```
+
 ### 2.2 Where Did We Park?
 
 ```
-explainPermit(A):
-	i = length(A)
-	permits = list of maximum size i
+explain_permit(a):
+    k = len(D)
+    n = len(a)
 
-	while A[i] != 0:
-		min = infinity
-		permitChosen = -1
+    if len(a) == 0:
+        return []
+    else:
+        minimum = infinity
+        permit_idx_chosen = -1
 
-		for t in 1 to k:
-			candidate = A[i] - P[t]
-			if candidate < min:
-				min = candidate
-				permitChosen = t
+        for permit_idx in 1 to k:
 
-		if permitChosen = -1:
-			throw Error			// should not occur
+            if n - D[permit_idx] <= 0:
+                candidate = P[permit_idx]
 
-		i -= D[permitChosen]
-		add permitChosen to the beginning of permits
+            else if a[end - D[permit_idx]] == a[n] - P[permit_idx]:
+                candidate = a[n - D[permit_idx]]
 
-	return permits		
+			else:
+				Do not bother with this permit,
+				skip over the rest of this iteration.
+
+            if candidate < minimum:
+                minimum = candidate
+                permit_idx_chosen = permit_idx
+
+        if permit_idx_chosen == -1:
+			throw an Error		// should not occur
+
+		# Add our permit to the front of the list (so that it is displayed in order)
+        return list(D[permit_idx_chosen]) + explain_permit(a[n - (D[permit_idx_chosen])])
+```
+
+Now, in Python:
+
+```Python
+def explain_permit(a):
+    k = len(D)
+    end = len(a) - 1
+
+    if len(a) == 0:
+        return []
+    else:
+        minimum = float("inf")  # infinity.
+        permit_idx_chosen = -1
+        for permit_idx in range(k):
+
+            if end - D[permit_idx] < 0:
+                # Using this pass would fulfill our time. Use cost of pass itself.
+                candidate = P[permit_idx]
+
+            elif a[end - D[permit_idx]] == a[end] - P[permit_idx]:
+                # We have used this pass to get to the next step.
+                candidate = a[-D[permit_idx]]
+
+            else:
+                # This pass has not been used at this step. Ignore it.
+                continue
+
+            # Take the minimum over all iterations at this step.
+            if candidate < minimum:
+                minimum = candidate
+                permit_idx_chosen = permit_idx
+
+        # Make sure we've chosen a pass.
+        assert(permit_idx_chosen != -1)
+
+        return [D[permit_idx_chosen]] +
+				explain_permit(a[:-(D[permit_idx_chosen])])
 ```
 
 ## 3. Pwner of All I Survey
