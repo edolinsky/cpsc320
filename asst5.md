@@ -59,7 +59,7 @@ matrix, as shown below for n=4:
 
 As _&Theta;(n<sup>2</sup>)_ entries are computed in constant time each, and the
 set-up work would take no greater than _O(n<sup>2</sup>)_ time, the
-slightly less naive algorithm would run in _&Theta;(n<sup>2</sup>)_ time.
+slightly less naive memoized algorithm would run in _&Theta;(n<sup>2</sup>)_ time.
 
 #### 1.1.3
 ```
@@ -88,7 +88,7 @@ memoizedHelper(A, C, i):
 
 			for j = ceil(i / 2) to i - 1:
 				candidate = memoizedHelper(A, C, j) + C[i] - C[j]
-				if contender < min:
+				if candidate < min:
 					min = candidate
 
 			A[i] = min
