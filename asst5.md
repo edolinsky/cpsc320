@@ -291,7 +291,7 @@ Let us have question lengths 4,5,3,5,2,6 with m = 6
 
 ### 3.2 A Fair and Balanced Survey
 
-*here we want to try every page length we can, recursing the rest of the questions*
+*here we want to try every length we can for the current page, recursing the rest of the questions*
 e.g.: 1,2,3,4,5 with m = 5
 try {{1}, recurse}, {{1,2}, recurse}, {{1,2,3}, recurse}, {{1,2,3,4}, recurse}
 
@@ -308,7 +308,7 @@ of a question, m
                     score = min(score, LowestScore(Q[index+1:end], m))
                     index++
                 else
-                    // if Q[index] == null then we ran out of pages,
+                    // if Q[index] == null then we ran out of questions and
                     // we just formed the last page, which scores 0
                     return 0
             // end while
@@ -326,4 +326,4 @@ of a question, m
 
 ### 4.2 Seamy Details
 
-C(i,j) = min(C(i,j-1), C(i,j), C(i,j+1)) + A[i][j]
+C(i , j) = min( C(i , j-1), C(i , j), C(i , j+1) ) + A[ i ][ j ]
