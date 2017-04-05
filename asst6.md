@@ -47,7 +47,7 @@ isSubsetSum(A, k):
         for j in 1 to k:
             // if this sum was possible with a previous subset,
             // it's still possible now. (variable A[i-1] need not be used)
-            s[i][j] = s[i - 1][j]
+            S[i][j] = S[i - 1][j]
 
             // this sum is also possible if we can add this variable to
             // a previously possible sum. (variable A[i-1] used)
@@ -136,4 +136,38 @@ def explain_subset_sum(a, s):
 
 <div style="page-break-after: always;"></div>
 
+## 3.1 Reduction from SAT to PIPELINE
+
+a)</br>
+1. W1 = N, W2 = N
+2. W1 = S, W2 = S
+
+b)</br>
+For this reduction, we have an instance of SAT and wish to turn it into an instance of PIPELINE. An instance of PIPELINE
+is a graph G = (W, P, R, E) where W is the set of nodes that are "oil wells", P is the set of nodes that are
+"pump stations", R is the set of nodes that are "refineries" and E is the set of edges in the graph.
+
+The reduction is done as follows:
+1. **W:** A node w&#8712;W is created for each variable in SAT. The switch for an oil well can be North or South which
+will be x and x&#772;, respectively.
+2. **P:** A node p&#8712;P is created for each value of each variable in SAT. That is, one pump node is created to hook
+up to the north and south connections of each oil well. The pumps correspond to the values x and x&#772; and is what we
+will call the pumps.
+3. **R:** A node r&#8712;R is created for each of the following:
+    1. One for every variable, hooked up to the corresponding pumps of the variable. That is, we create the clause (x<sub>1</sub> V x&#772;<sub>1</sub>) and hook it up to the pumps x<sub>1</sub> and x&#772;<sub>1</sub>.
+    2. One for every clause in SAT, hooked up to the corresponding pumps. For example:
+    (x<sub>1</sub> V x<sub>2</sub> V x&#772;<sub>3</sub>) becomes an r&#8712;R hooked up to the pumps x<sub>1</sub>, x<sub>2</sub> and x&#772;<sub>3</sub>
+4. **E:** as mentioned in the above sections, E is created by adding an edge to E every time we "hook up" nodes. Overall
+this set is made up of:
+    1. edges from each oil well *x* to each of its pumps *x and x&#772;*
+    2. edges from each pump *x and x&#772;* to the clause *(x V x&#772;)*
+    3. edges to each clause in SAT from its composing elements.
+
+c)</br>
+
 # DID NOT CHOOSE
+- 1.2
+- 1.3
+- 1.5
+- 2.1
+- 2.2
