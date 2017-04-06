@@ -153,17 +153,47 @@ will be x and x&#772;, respectively.
 2. **P:** A node p&#8712;P is created for each value of each variable in SAT. That is, one pump node is created to hook
 up to the north and south connections of each oil well. The pumps correspond to the values x and x&#772; and is what we
 will call the pumps.
-3. **R:** A node r&#8712;R is created for each of the following:
-    1. One for every variable, hooked up to the corresponding pumps of the variable. That is, we create the clause (x<sub>1</sub> V x&#772;<sub>1</sub>) and hook it up to the pumps x<sub>1</sub> and x&#772;<sub>1</sub>.
-    2. One for every clause in SAT, hooked up to the corresponding pumps. For example:
-    (x<sub>1</sub> V x<sub>2</sub> V x&#772;<sub>3</sub>) becomes an r&#8712;R hooked up to the pumps x<sub>1</sub>, x<sub>2</sub> and x&#772;<sub>3</sub>
+3. **R:** A node r&#8712;R is created for each clause in SAT, hooked up to the corresponding pumps. For example:
+(x<sub>1</sub> V x<sub>2</sub> V x&#772;<sub>3</sub>) becomes an r&#8712;R hooked up to the pumps x<sub>1</sub>,
+x<sub>2</sub> and x&#772;<sub>3</sub>. *This is assuming that in the original problem, "any number of pipelines going
+out" includes 0, so a pump station can feed 0 refineries.*
 4. **E:** as mentioned in the above sections, E is created by adding an edge to E every time we "hook up" nodes. Overall
 this set is made up of:
     1. edges from each oil well *x* to each of its pumps *x and x&#772;*
-    2. edges from each pump *x and x&#772;* to the clause *(x V x&#772;)*
-    3. edges to each clause in SAT from its composing elements.
+    2. edges to each clause in SAT from its composing elements(pumps).
 
 c)</br>
+1. **SAT => PIPELINE** </br>
+If the answer to SAT is YES then we have a list of truth values for each variable in the problem. This gives us a north
+or south assignment for each of the oil well switches, and therefore edges to each pump that receives oil. From this we
+can then add edges from these pumps to all the refineries they lead to. Because we know that every clause in SAT has at
+least one true value, we know at least one of every refineries input pipes has oil, and the answer is therefore YES too.
+
+2. **PIPELINE => SAT** </br>
+If the answer to PIPELINE is YES, then we have a list of edges in our graph that tell us which pumps receive oil and all
+the refineries they send oil too. Since a oil well can only send oil to one of its pumps (north or south), that gives us
+the truth values of the variables of SAT (true or false, respectively). Additionally, assuming the PIPELINE certificate
+is valid, we know all of the refineries receive oil, which means that for every clause in SAT at least one of its
+elements is true, which means all clauses in SAT are true; therefore the answer to SAT is YES as well.
+
+3. **Polynomial reduction** </br>
+To reduce from SAT to PIPELINE we have to do the following:
+
+        for every variable in SAT:
+            create an oil well (O(1))
+            create two pumps   (O(1))
+            create two edges from the oil well to the two pumps (O(1))
+        = O(n)
+
+        for every clause in SAT:
+            create a refinery O(1)
+            attach it to each pump in the clause (O(n), this isn't 3-SAT)
+        = O(n<sup>2</sup>)
+
+        = O(n + n<sup>2</sup>)
+        = O(n<sup>2</sup>)
+
+Therefore we have a polynomial time correct reduction from SAT to PIPELINE
 
 # DID NOT CHOOSE
 - 1.2
